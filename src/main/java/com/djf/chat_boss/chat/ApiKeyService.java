@@ -1,4 +1,4 @@
-package com.djf.chat_boss.security;
+package com.djf.chat_boss.chat;
 
 import io.getstream.chat.java.models.User;
 import jakarta.annotation.PostConstruct;
