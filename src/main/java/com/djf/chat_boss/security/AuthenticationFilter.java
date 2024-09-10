@@ -26,7 +26,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             Authentication authentication = authenticationService.getAuthentication(request);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            //dont set auth here so spring checks httpbasic after
+            // SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception exp) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
@@ -41,6 +42,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         AntPathRequestMatcher matcher2 = new AntPathRequestMatcher("/h2-console/**");
-        return   matcher2.matches(request);
+        return matcher2.matches(request);
     }
 }

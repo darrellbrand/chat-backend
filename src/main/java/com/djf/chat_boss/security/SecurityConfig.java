@@ -28,11 +28,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.securityMatcher("/token/**").csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
                         authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry.requestMatchers("/token/**").authenticated())
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(Customizer.withDefaults())
-                .addFilterAfter(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
+                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.
+                        sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
     }
-
 
     @Bean
     @Order(1)
